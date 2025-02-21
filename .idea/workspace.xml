@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6a7e7e4-55cc-4856-b744-d3c6f8d9b321" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/controller/order.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/entity/order.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/entity/user.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/middleware/auth.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/order.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/repository/order.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/route/route.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/service/order.go" afterDir="false" />
-    </list>
+    <list default="true" id="f6a7e7e4-55cc-4856-b744-d3c6f8d9b321" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
