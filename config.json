@@ -1,8 +1,8 @@
 {
     "port":"8080",
-    "db_User":"root",
-    "db_Password":"root",
-    "db_Host":"localhost",
+    "db_User":"db_user",
+    "db_Password":"kothinPassword",
+    "db_Host":"172.18.0.2",
     "db_Port":"3306",
-    "db_Schema":"message_broker"
+    "db_Schema":"order"
 }
