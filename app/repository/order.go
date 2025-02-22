@@ -27,34 +27,25 @@ func (odrRepo *orderRepo) Create(newOrder entity.Order) error {
 	}
 	return nil
 }
-func (odrRepo *orderRepo) List(queryParam models.QueryParam) ([]entity.Order, error) {
+func (odrRepo *orderRepo) List(queryParam models.QueryParam) ([]entity.Order, int64, error) {
 	var orders []entity.Order
+	var count int64
 
 	baseQ := odrRepo.DB.Model(entity.Order{})
 
-	if queryParam.TransferStatus {
-		baseQ = baseQ.Where("transfer_status = ?", true)
-	}
+	baseQ = baseQ.Where("transfer_status = ?", true).Where("archive = ?", false)
 
-	if queryParam.Archive {
-		baseQ = baseQ.Where("archive = ?", true)
-	}
-
-	if queryParam.Limit != 0 {
+	if queryParam.Limit != 0 && queryParam.Page > 0 {
 		baseQ = baseQ.Limit(queryParam.Limit).Offset((queryParam.Page - 1) * queryParam.Limit)
 	}
 
-	baseQ = baseQ.Limit(queryParam.Limit).Offset((queryParam.Page - 1) * queryParam.Limit)
+	baseQ = baseQ.Count(&count)
 
 	if dbErr := baseQ.Find(&orders).Error; dbErr != nil {
-		return nil, dbErr
+		return nil, 0, dbErr
 	}
 
-	if dbErr := odrRepo.DB.Find(&orders).Error; dbErr != nil {
-		return nil, dbErr
-	}
-
-	return orders, nil
+	return orders, count, nil
 }
 
 func (odrRepo *orderRepo) Cancel() {

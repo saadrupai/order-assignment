@@ -65,7 +65,7 @@ func (odrSvc *orderService) Create(orderReq models.OrderReqBody) (models.OrderCr
 	}, nil
 }
 func (odrSvc *orderService) List(queryParam models.QueryParam) (models.OrderListResponse, error) {
-	orders, count, err := odrSvc.orderRepo.List()
+	orders, count, err := odrSvc.orderRepo.List(queryParam)
 	if err != nil {
 		odrSvc.logger.Error("failed to list orders", zap.Error(err))
 		return models.OrderListResponse{}, err
@@ -103,6 +103,14 @@ func (odrSvc *orderService) List(queryParam models.QueryParam) (models.OrderList
 		Data []models.OrderRespData `json:"data"`
 	}
 
+	pagination := models.PaginationInfo{
+		Total:       count,
+		CurrentPage: int64(queryParam.Page),
+		PerPage:     int64(queryParam.Limit),
+		TotalInPage: int64(len(orders)),
+		LastPage:    (count + int64(queryParam.Limit) - 1) / int64(queryParam.Limit),
+	}
+
 	respose := models.OrderListResponse{
 		Response: models.Response{
 			Message: "Orders successfully fetched",
@@ -112,13 +120,7 @@ func (odrSvc *orderService) List(queryParam models.QueryParam) (models.OrderList
 		Data: orderResponse{
 			Data: orderResps,
 		},
-		PaginationInfo: models.PaginationInfo{
-			Total:       uint(count),
-			CurrentPage: 1,
-			PerPage:     10,
-			TotalInPage: len(orders),
-			LastPage:    1,
-		},
+		PaginationInfo: pagination,
 	}
 	return respose, nil
 }

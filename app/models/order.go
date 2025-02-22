@@ -68,11 +68,11 @@ type OrderCreateResponse struct {
 }
 
 type PaginationInfo struct {
-	Total       uint `json:"total"`
-	CurrentPage uint `json:"current_page"`
-	PerPage     int  `json:"per_page"`
-	TotalInPage int  `json:"total_in_page"`
-	LastPage    int  `json:"last_page"`
+	Total       int64 `json:"total"`
+	CurrentPage int64 `json:"current_page"`
+	PerPage     int64 `json:"per_page"`
+	TotalInPage int64 `json:"total_in_page"`
+	LastPage    int64 `json:"last_page"`
 }
 
 type OrderRespData struct {
