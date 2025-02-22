@@ -77,7 +77,36 @@ func (odrCtr *orderController) Create(ctx *gin.Context) {
 }
 
 func (odrCtr *orderController) List(ctx *gin.Context) {
+	//transferStatus := ctx.Query("transfer_status")
+	//archive := ctx.Query("archive")
+	//limit := ctx.Query("limit")
+	//archive := ctx.Query("page")
+	var queryParams models.QueryParam
 
+	if err := ctx.ShouldBindQuery(&queryParams); err != nil {
+		odrCtr.logger.Error("Failed to bind query parameters", zap.Error(err))
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Message: "Invalid query parameters",
+			Type:    "error",
+			Code:    http.StatusBadRequest,
+			Errors:  map[string]interface{}{"query": []string{"Invalid query parameters"}},
+		})
+		return
+	}
+
+	orders, err := odrCtr.orderSvc.List(queryParams)
+	if err != nil {
+		odrCtr.logger.Error("Failed to list orders", zap.Error(err))
+		ctx.JSON(http.StatusInternalServerError, models.Response{
+			Message: "Failed to list orders",
+			Type:    "error",
+			Code:    http.StatusInternalServerError,
+			Errors:  map[string]interface{}{"order": []string{err.Error()}},
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, orders)
 }
 
 func (odrCtr *orderController) Cancel(ctx *gin.Context) {
