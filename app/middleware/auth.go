@@ -24,7 +24,12 @@ func AuthMiddleware() gin.HandlerFunc {
 			return jwtKey, nil
 		})
 		if err != nil || !token.Valid {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
+			response := models.Response{
+				Message: "Unauthorized",
+				Type:    "error",
+				Code:    http.StatusUnauthorized,
+			}
+			c.JSON(http.StatusUnauthorized, response)
 			c.Abort()
 			return
 		}
