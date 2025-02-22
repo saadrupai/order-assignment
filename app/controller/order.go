@@ -21,17 +21,17 @@ func NewOrderController(orderSvc service.IOrderService, logger *zap.Logger) *ord
 	}
 }
 
-func (odrCtr *orderController) Create(ctx *gin.Context) error {
+func (odrCtr *orderController) Create(ctx *gin.Context) {
 	var orderReq models.OrderReqBody
 	if err := ctx.ShouldBindJSON(&orderReq); err != nil {
 		odrCtr.logger.Error("Invalid order request", zap.Error(err))
-		return ctx.JSON(http.StatusBadRequest, models.Response{
+		ctx.JSON(http.StatusBadRequest, models.Response{
 			Message: "Invalid request body",
 			Type:    "error",
 			Code:    http.StatusBadRequest,
 			Errors:  map[string]interface{}{"request": []string{err.Error()}},
 		})
-
+		return
 	}
 
 	if err := orderReq.Validate(); err != nil {
@@ -46,39 +46,40 @@ func (odrCtr *orderController) Create(ctx *gin.Context) error {
 			validationErrors["general"] = []string{err.Error()}
 		}
 
-		return ctx.JSON(http.StatusUnprocessableEntity, models.Response{
+		ctx.JSON(http.StatusUnprocessableEntity, models.Response{
 			Message: "Please fix the given errors",
 			Type:    "error",
 			Code:    http.StatusUnprocessableEntity,
 			Errors:  validationErrors,
 		})
+		return
 	}
 
 	createdOrder, createErr := odrCtr.orderSvc.Create(orderReq)
 	if createErr != nil {
 		odrCtr.logger.Error("Failed to create order", zap.Error(createErr))
-		return ctx.JSON(http.StatusInternalServerError, models.Response{
+		ctx.JSON(http.StatusInternalServerError, models.Response{
 			Message: "Failed to create order",
 			Type:    "error",
 			Code:    http.StatusInternalServerError,
 			Errors:  map[string]interface{}{"order": []string{createErr.Error()}},
 		})
+		return
 
 	}
 
-	return ctx.JSON(http.StatusOK, models.Response{
+	ctx.JSON(http.StatusOK, models.Response{
 		Message: "Order Created Successfully",
 		Type:    "success",
 		Code:    http.StatusOK,
 		Data:    createdOrder,
 	})
-
 }
 
 func (odrCtr *orderController) List(ctx *gin.Context) {
 
 }
 
-func (odrCtr *orderController) Cancel() {
+func (odrCtr *orderController) Cancel(ctx *gin.Context) {
 
 }

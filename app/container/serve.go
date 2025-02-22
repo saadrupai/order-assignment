@@ -26,8 +26,8 @@ func Serve(router *gin.Engine) {
 	orderCtr := controller.NewOrderController(orderSvc, logger)
 
 	apiVersion.POST("/orders", orderCtr.Create)
-	apiVersion.GET("/orders/all", orderCtr.List())
-	apiVersion.PUT("/orders/:consignment-id/cancel", orderCtr.Cancel())
+	apiVersion.GET("/orders/all", orderCtr.List)
+	apiVersion.PUT("/orders/:consignment-id/cancel", orderCtr.Cancel)
 
 	router.Run(":" + config.LocalConfig.Port)
 }

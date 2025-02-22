@@ -1,7 +1,10 @@
 package models
 
 import (
+	"fmt"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/saadrupai/order-assignment/app/consts"
+	"regexp"
 )
 
 type OrderReqBody struct {
@@ -24,7 +27,20 @@ type OrderReqBody struct {
 
 func (orderReq *OrderReqBody) Validate() error {
 	return validation.ValidateStruct(orderReq, validation.Field(&orderReq.RecipientName, validation.Required.Error("The recipient name field is required.")),
-		validation.Field(&orderReq.RecipientPhone, validation.Required.Error("The recipient phone field is required.")),
+		validation.Field(&orderReq.RecipientPhone, validation.Required.Error("The recipient phone field is required."),
+			validation.By(func(value interface{}) error {
+				strValue, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("%v must be a string", value)
+				}
+
+				reg := regexp.MustCompile(consts.MobileNumberRegex)
+				if !reg.MatchString(strValue) {
+					return fmt.Errorf("invalid phone number format")
+				}
+
+				return nil
+			})),
 		validation.Field(&orderReq.RecipientAddress, validation.Required.Error("The recipient address field is required.")),
 		validation.Field(&orderReq.DeliveryType, validation.Required.Error("The delivery type field is required.")),
 		validation.Field(&orderReq.AmountToCollect, validation.Required.Error("The amount to collect field is required.")),

@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6a7e7e4-55cc-4856-b744-d3c6f8d9b321" name="Changes" comment="" />
+    <list default="true" id="f6a7e7e4-55cc-4856-b744-d3c6f8d9b321" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build_and_push.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/consts/consts.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/consts/consts.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/container/serve.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/container/serve.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controller/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/order.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/entity/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/entity/order.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/order.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +50,7 @@
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "feature/apis",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
     "last_opened_file_path": "/home/saadrupai/Documents/myprojects/order-assignment",

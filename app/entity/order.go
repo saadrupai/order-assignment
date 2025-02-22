@@ -1,6 +1,9 @@
 package entity
 
+import "gorm.io/gorm"
+
 type Order struct {
+	gorm.Model
 	ID                 uint    `gorm:"primaryKey" json:"id"`
 	ConsignmentID      uint    `json:"consignment_id"`
 	StoreID            uint    `json:"store_id"`
