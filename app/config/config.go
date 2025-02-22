@@ -11,27 +11,23 @@ import (
 )
 
 type Config struct {
-	Port       string `json:"port"`
-	DbUser     string `json:"db_user"`
-	DbPassword string `json:"db_password"`
-	DbHost     string `json:"db_host"`
-	DbPort     string `json:"db_port"`
-	DbSchema   string `json:"db_schema"`
+	Port       string `mapstructure:"port"`
+	DbUser     string `mapstructure:"db_user"`
+	DbPassword string `mapstructure:"db_password"`
+	DbHost     string `mapstructure:"db_host"`
+	DbPort     string `mapstructure:"db_port"`
+	DbSchema   string `mapstructure:"db_schema"`
 }
 
 var LocalConfig *Config
 var db *gorm.DB
 
 func LoadConfig() *Config {
-	viper.AddConfigPath(".")
-	viper.SetConfigName("app")
-	viper.SetConfigType("env")
-	viper.AutomaticEnv()
+	viper.SetConfigFile("app.env")
 
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatal("failed to load env variables")
 	}
-
 	var config Config
 	if err := viper.Unmarshal(&config); err != nil {
 		log.Fatal("failed to load env variables")

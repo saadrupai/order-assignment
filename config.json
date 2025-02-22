@@ -1,5 +1,8 @@
 {
-    "server":{
-        "port":"8080"
-    }
+    "port":"8080",
+    "db_User":"root",
+    "db_Password":"root",
+    "db_Host":"localhost",
+    "db_Port":"3306",
+    "db_Schema":"message_broker"
 }
