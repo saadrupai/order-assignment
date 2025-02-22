@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "1d3a8c25-5d12-4424-ac9e-186a22346a6a",
+		"name": "assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29403112",
+		"_collection_link": "https://bold-crescent-172702.postman.co/workspace/2fd99537-fbe3-46c4-8f24-c0f957e8fac1/collection/29403112-1d3a8c25-5d12-4424-ac9e-186a22346a6a?action=share&source=collection_link&creator=29403112"
+	},
+	"item": [
+		{
+			"name": "order-asignment",
+			"item": [
+				{
+					"name": "create order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAxOTAxOTAxOTAxQG1haWxpbmF0b3IuY29tIiwiZXhwIjoxNzQwNDE2NjAzfQ.arLG6uuKLZYC9VNwyr4kWPagW2fV9lRaHiC4GAfjvhA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_id\": 131174,\n    \"merchant_order_id\": \"sds3dfw\",\n    \"recipient_name\": \"sonata\",\n    \"recipient_phone\": \"01746302095\",\n    \"recipient_address\": \"jhigatola,dhaka\",\n    \"recipient_city\": 1,\n    \"recipient_zone\": 3,\n    \"recipient_area\": 1,\n    \"delivery_type\": 48,\n    \"item_type\": 2,\n    \"special_instruction\": \"nothing\",\n    \"item_quantity\": 1,\n    \"item_weight\": 0.5,\n    \"amount_to_collect\": \"1200\",\n    \"item_description\": \"nothing\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/api/v1/orders",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAxOTAxOTAxOTAxQG1haWxpbmF0b3IuY29tIiwiZXhwIjoxNzQwNDE2NjAzfQ.arLG6uuKLZYC9VNwyr4kWPagW2fV9lRaHiC4GAfjvhA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_id\": 131174,\n    \"merchant_order_id\": \"sds3dfw\",\n    \"recipient_name\": \"sonata\",\n    \"recipient_phone\": \"01746302095\",\n    \"recipient_address\": \"jhigatola,dhaka\",\n    \"recipient_city\": 1,\n    \"recipient_zone\": 3,\n    \"recipient_area\": 1,\n    \"delivery_type\": 48,\n    \"item_type\": 2,\n    \"special_instruction\": \"nothing\",\n    \"item_quantity\": 1,\n    \"item_weight\": 0.5,\n    \"amount_to_collect\": \"1200\",\n    \"item_description\": \"nothing\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/api/v1/orders/all?Limit=1&Page=1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"all"
+							],
+							"query": [
+								{
+									"key": "Limit",
+									"value": "1"
+								},
+								{
+									"key": "Page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjAxOTAxOTAxOTAxQG1haWxpbmF0b3IuY29tIiwiZXhwIjoxNzQwNDE2NjAzfQ.arLG6uuKLZYC9VNwyr4kWPagW2fV9lRaHiC4GAfjvhA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_id\": 131174,\n    \"merchant_order_id\": \"sds3dfw\",\n    \"recipient_name\": \"sonata\",\n    \"recipient_phone\": \"01746302095\",\n    \"recipient_address\": \"jhigatola,dhaka\",\n    \"recipient_city\": 1,\n    \"recipient_zone\": 3,\n    \"recipient_area\": 1,\n    \"delivery_type\": 48,\n    \"item_type\": 2,\n    \"special_instruction\": \"nothing\",\n    \"item_quantity\": 1,\n    \"item_weight\": 0.5,\n    \"amount_to_collect\": \"1200\",\n    \"item_description\": \"nothing\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/api/v1/orders/63f04d08-18a8-4eec-8064-076fca117c23/cancel",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"63f04d08-18a8-4eec-8064-076fca117c23",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"01901901901@mailinator.com\",\n    \"password\":\"321dsaf\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/api/v1/login",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

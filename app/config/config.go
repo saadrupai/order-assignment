@@ -17,6 +17,7 @@ type Config struct {
 	DbHost     string `mapstructure:"db_host"`
 	DbPort     string `mapstructure:"db_port"`
 	DbSchema   string `mapstructure:"db_schema"`
+	SecretKey  string `mapstructure:"secret_key"`
 }
 
 var LocalConfig *Config
