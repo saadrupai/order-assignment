@@ -23,7 +23,7 @@ type OrderReqBody struct {
 	SpecialInstruction string  `json:"special_instruction"`
 	ItemQuantity       uint    `json:"item_quantity"`     //required
 	ItemWeight         float64 `json:"item_weight"`       //required
-	AmountToCollect    float64 `json:"amount_to_collect"` //required
+	AmountToCollect    string  `json:"amount_to_collect"` //required
 	ItemDescription    string  `json:"item_description"`
 }
 
@@ -56,7 +56,7 @@ type Response struct {
 	Message string      `json:"message"`
 	Type    string      `json:"type"`
 	Code    int         `json:"code"`
-	Data    interface{} `json:"data"` // Use interface{} for dynamic data
+	Data    interface{} `json:"data,omitempty"` // Use interface{} for dynamic data
 	Errors  interface{} `json:"errors,omitempty"`
 }
 

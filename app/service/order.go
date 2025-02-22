@@ -8,12 +8,13 @@ import (
 	"github.com/saadrupai/order-assignment/app/repository"
 	"go.uber.org/zap"
 	"net/http"
+	"strconv"
 )
 
 type IOrderService interface {
 	Create(orderReq models.OrderReqBody) (models.OrderCreateResponse, error)
 	List(queryParam models.QueryParam) (models.OrderListResponse, error)
-	Cancel()
+	Cancel(consignmentID string) error
 }
 
 type orderService struct {
@@ -50,6 +51,8 @@ func (odrSvc *orderService) Create(orderReq models.OrderReqBody) (models.OrderCr
 		DeliveryFee:        consts.DeliveryFee,
 		OrderType:          consts.OrderTypeDelivery,
 		CODFee:             consts.CODFee,
+		TransferStatus:     true,
+		Archive:            false,
 	}
 	createErr := odrSvc.orderRepo.Create(newOrder)
 	if createErr != nil {
@@ -65,13 +68,20 @@ func (odrSvc *orderService) Create(orderReq models.OrderReqBody) (models.OrderCr
 	}, nil
 }
 func (odrSvc *orderService) List(queryParam models.QueryParam) (models.OrderListResponse, error) {
+	if queryParam.Limit == 0 {
+		queryParam.Limit = 1 // default
+	}
+	if queryParam.Page == 0 {
+		queryParam.Page = 1 // default
+	}
 	orders, count, err := odrSvc.orderRepo.List(queryParam)
 	if err != nil {
 		odrSvc.logger.Error("failed to list orders", zap.Error(err))
 		return models.OrderListResponse{}, err
 	}
-	var orderResps []models.OrderRespData
+	orderResps := []models.OrderRespData{}
 	for _, order := range orders {
+		amountToCollect, _ := strconv.Atoi(order.AmountToCollect)
 		orderResp := models.OrderRespData{
 			OrderConsignmentID: order.ConsignmentID,
 			OrderCreatedAt:     order.CreatedAt,
@@ -80,7 +90,7 @@ func (odrSvc *orderService) List(queryParam models.QueryParam) (models.OrderList
 			RecipientName:      order.RecipientName,
 			RecipientAddress:   order.RecipientAddress,
 			RecipientPhone:     order.RecipientPhone,
-			OrderAmount:        order.AmountToCollect,
+			OrderAmount:        float64(amountToCollect),
 			TotalFee:           order.DeliveryFee,
 			Instruction:        order.SpecialInstruction,
 			OrderTypeID:        order.ItemType,
@@ -124,6 +134,16 @@ func (odrSvc *orderService) List(queryParam models.QueryParam) (models.OrderList
 	}
 	return respose, nil
 }
-func (odrSvc *orderService) Cancel() {
+func (odrSvc *orderService) Cancel(consignmentID string) error {
+	consignmentUUID, conIDErr := uuid.Parse(consignmentID)
+	if conIDErr != nil {
+		return &models.NotFoundError{Message: "Invalid UUID format"}
+	}
 
+	err := odrSvc.orderRepo.Cancel(consignmentUUID)
+	if err != nil {
+		odrSvc.logger.Error("failed to cancel order", zap.Error(err))
+		return err
+	}
+	return nil
 }

@@ -8,7 +8,7 @@ import (
 type Order struct {
 	gorm.Model
 	ID                 uint      `gorm:"primaryKey" json:"id"`
-	ConsignmentID      uuid.UUID `gorm:"type:uuid" json:"consignment_id"`
+	ConsignmentID      uuid.UUID `gorm:"type:varchar(255)" json:"consignment_id"`
 	StoreID            uint      `json:"store_id"`
 	MerchantOrderID    string    `json:"merchant_order_id"`
 	RecipientName      string    `json:"recipient_name"`    //required
@@ -22,7 +22,7 @@ type Order struct {
 	SpecialInstruction string    `json:"special_instruction"`
 	ItemQuantity       uint      `json:"item_quantity"`     //required
 	ItemWeight         float64   `json:"item_weight"`       //required
-	AmountToCollect    float64   `json:"amount_to_collect"` //required
+	AmountToCollect    string    `json:"amount_to_collect"` //required
 	ItemDescription    string    `json:"item_description"`
 	OrderStatus        string    `json:"order_status" gorm:"default:'Pending'"`
 	DeliveryFee        float64   `json:"delivery_fee"`
@@ -31,4 +31,5 @@ type Order struct {
 	Discount           float64   `json:"discont"`
 	OrderType          string    `json:"order_type"`
 	TransferStatus     bool      `json:"transfer_status"`
+	Archive            bool      `json:"archive"`
 }

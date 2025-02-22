@@ -77,10 +77,6 @@ func (odrCtr *orderController) Create(ctx *gin.Context) {
 }
 
 func (odrCtr *orderController) List(ctx *gin.Context) {
-	//transferStatus := ctx.Query("transfer_status")
-	//archive := ctx.Query("archive")
-	//limit := ctx.Query("limit")
-	//archive := ctx.Query("page")
 	var queryParams models.QueryParam
 
 	if err := ctx.ShouldBindQuery(&queryParams); err != nil {
@@ -96,7 +92,6 @@ func (odrCtr *orderController) List(ctx *gin.Context) {
 
 	orders, err := odrCtr.orderSvc.List(queryParams)
 	if err != nil {
-		odrCtr.logger.Error("Failed to list orders", zap.Error(err))
 		ctx.JSON(http.StatusInternalServerError, models.Response{
 			Message: "Failed to list orders",
 			Type:    "error",
@@ -110,5 +105,30 @@ func (odrCtr *orderController) List(ctx *gin.Context) {
 }
 
 func (odrCtr *orderController) Cancel(ctx *gin.Context) {
+	conIDStr := ctx.Param("consignment-id")
 
+	err := odrCtr.orderSvc.Cancel(conIDStr)
+	if err != nil {
+		if _, ok := err.(*models.NotFoundError); ok {
+			ctx.JSON(http.StatusInternalServerError, models.Response{
+				Message: "Please contact CX to cancel order",
+				Type:    "error",
+				Code:    http.StatusBadRequest,
+			})
+		} else {
+			ctx.JSON(http.StatusInternalServerError, models.Response{
+				Message: "Failed to cancel order",
+				Type:    "error",
+				Code:    http.StatusInternalServerError,
+				Errors:  map[string]interface{}{"order": []string{err.Error()}},
+			})
+		}
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Message: "Order Cancelled Successfully",
+		Type:    "success",
+		Code:    http.StatusOK,
+	})
 }
